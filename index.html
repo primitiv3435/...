@@ -53,6 +53,12 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ac);outline-offset:
 .ov{background:rgba(0,0,0,.66);backdrop-filter:blur(6px)}.sh{background:linear-gradient(180deg,#131c17,#0b110e);border-radius:30px 30px 0 0;animation:up .25s ease-out}@keyframes up{from{transform:translateY(24px);opacity:0}}
 .lg{width:78px;height:78px;margin:0 auto 6px;border-radius:26px;display:grid;place-items:center;background:linear-gradient(135deg,var(--ac),var(--g2));color:#06110a;font-size:42px;box-shadow:0 0 56px rgba(180,242,74,.32)}.au h1{letter-spacing:9px}
 .toast{bottom:104px}
+.simBig{font-size:30px;font-weight:800;letter-spacing:-.8px;margin:16px 0 8px}.simBig small{font-size:13px;font-weight:600;color:var(--mu);margin-left:3px}
+input.rng{-webkit-appearance:none;appearance:none;width:100%;height:8px;border-radius:9px;outline:0;cursor:pointer;background:#232e28}
+input.rng::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--g2));box-shadow:0 4px 14px -3px rgba(180,242,74,.7);border:3px solid #0d1310;cursor:pointer}
+input.rng::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--ac),var(--g2));box-shadow:0 4px 14px -3px rgba(180,242,74,.7);border:3px solid #0d1310;cursor:pointer;border-radius:50%}
+input.rng::-moz-range-track{height:8px;border-radius:9px;background:#232e28}
+.simDur{margin-top:14px;padding:13px;border-radius:14px;background:rgba(180,242,74,.09);border:1px solid rgba(180,242,74,.28);color:var(--ac);font-weight:700;font-size:14.5px;text-align:center}
 .nc{border-left:4px solid var(--c,#2a3530)}.ci{display:flex;gap:9px;align-items:center;padding:3px 0;font-size:14px;cursor:pointer}.ck.sm{width:20px;height:20px;border-width:1.5px}.dn{text-decoration:line-through;color:var(--mu)}
 .cd{width:30px;height:30px;border-radius:50%;background:var(--c);border:2px solid transparent;margin-right:10px}.cd.on{border-color:#fff;box-shadow:0 0 0 2px var(--c)}
 .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:99px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.06);font-size:12px;color:var(--mu);white-space:nowrap}
@@ -63,9 +69,21 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--ac);outline-offset:
 .wt{align-items:baseline}.wt b{font-size:22px;letter-spacing:-.6px}
 .wn{background:rgba(255,184,77,.12);border:1px solid rgba(255,184,77,.35);color:#ffcf85;border-radius:14px;padding:10px 12px;font-size:12.5px;text-align:left}
 .nav{grid-template-columns:repeat(6,1fr)}.nav button{font-size:10px}
-.mg{max-width:88%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;margin:8px 0;overflow-wrap:anywhere}
-.mg.u{margin-left:auto;background:linear-gradient(135deg,var(--ac),var(--g2));color:#06110a;border-bottom-right-radius:6px;font-weight:500}
-.mg.a{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02)),var(--p);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:6px}.mg .li{display:block}
+.mrow{display:flex;gap:8px;margin:10px 0}.mrow.a{align-items:flex-start}.mrow.u{justify-content:flex-end}
+.nxav{width:28px;height:28px;border-radius:50%;flex:none;display:grid;place-items:center;background:linear-gradient(135deg,var(--ac),var(--g2));color:#06110a;box-shadow:0 4px 14px -4px rgba(180,242,74,.65);margin-top:2px}
+.mg{max-width:78%;padding:11px 14px;border-radius:18px;font-size:14.5px;line-height:1.5;margin:0;overflow-wrap:anywhere}
+.mg.u{margin-left:auto;max-width:88%;background:linear-gradient(135deg,var(--ac),var(--g2));color:#06110a;border-bottom-right-radius:6px;font-weight:500}
+.mg.a{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.02)),var(--p);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:6px;min-width:0}
+.mg .li{display:block;margin:2px 0}.mg .pl{margin:2px 0}.mg .pl:empty{display:none}
+.mg .mh{font-weight:800;margin:12px 0 4px;font-size:15px}.mg .mh:first-child{margin-top:0}
+.mg .nli{display:flex;gap:8px;margin:10px 0 3px;align-items:flex-start}.mg .nli:first-child{margin-top:0}
+.mg .nli .nn{flex:none;width:19px;height:19px;border-radius:50%;background:rgba(180,242,74,.18);color:var(--ac);font-size:10.5px;font-weight:800;display:grid;place-items:center;margin-top:2px}
+.mg i{font-style:normal;color:#cdd7d1}
+.mg .tbl{overflow-x:auto;margin:10px -2px;border-radius:12px;border:1px solid rgba(255,255,255,.09)}
+.mg .tbl table{border-collapse:collapse;width:100%;font-size:12px}
+.mg .tbl th,.mg .tbl td{padding:8px 9px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+.mg .tbl th{background:rgba(255,255,255,.05);font-weight:700;color:var(--tx);white-space:nowrap}
+.mg .tbl tr:last-child td{border-bottom:0}
 .hc2{margin-top:12px;padding:12px;border-radius:16px;background:radial-gradient(120% 140% at 100% 0,rgba(180,242,74,.18),transparent 60%),#0d1511;border:1px solid rgba(180,242,74,.3)}
 .tp{display:inline-flex;gap:4px;padding:4px 0}.tp i{width:7px;height:7px;border-radius:50%;background:var(--mu);animation:bl 1s infinite}.tp i:nth-child(2){animation-delay:.15s}.tp i:nth-child(3){animation-delay:.3s}@keyframes bl{0%,60%,100%{opacity:.3}30%{opacity:1}}
 .cb2{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));width:min(456px,calc(100% - 24px));z-index:15;display:flex;gap:8px;padding:8px;border-radius:22px;background:rgba(11,17,14,.92);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.09)}
@@ -192,8 +210,24 @@ return headB('money','Metas','Grandes sonhos, planos reais.',plus('gF()'))+`<div
 function gF(id){const g=S.goals.find(x=>x.id==id)||{};sheet(id?'Editar meta':'Nova Meta',`<label class="lb">Nome da meta</label><input id="gt" class="in" placeholder="Ex: Viagem dos sonhos" value="${esc(g.title||'')}"><label class="lb">Valor da meta</label>${mf('gv',g.target)}<label class="lb">Já guardado</label>${mf('gc',g.current)}<label class="lb">Valor mensal planejado (opcional)</label>${mf('gm',g.monthly)}<label class="lb">Prazo (opcional)</label><input id="gd" type="date" class="in" value="${g.date||''}"><label class="lb">Categoria</label><select id="gk" class="in">${GC.map(c=>`<option ${g.cat==c[0]?'selected':''}>${c[0]}</option>`).join('')}</select><button class="btn" onclick="gS(${id||0})">${id?'Salvar':'Criar meta'}</button>`)}
 function gS(id){const title=$('#gt').value.trim(),target=mv('gv');if(!title||target<=0)return toast('Preencha o nome e um valor válido');const o={title,target,current:Math.min(mv('gc'),target),monthly:mv('gm'),date:$('#gd').value,cat:$('#gk').value};
 if(id)Object.assign(S.goals.find(x=>x.id==id),o);else S.goals.push({id:Date.now(),...o});cl();save();toast('Meta salva ✓')}
-function gSim(id){const g=S.goals.find(x=>x.id==id),rem=g.target-g.current;sheet('Simular: '+esc(g.title),`<div class="mu" style="margin-bottom:10px">Faltam ${R(rem)}</div>${[100,250,500,1000].map(v=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--ln)"><span>Guardando ${R(v)}/mês</span><b>${rem<=0?'Concluída':'~'+Math.ceil(rem/v)+' meses'}</b></div>`).join('')}<label class="lb">Testar outro valor mensal</label>${mf('gsv')}<button class="btn o" onclick="gSimC(${id})">Calcular</button><div id="gsr" class="mu" style="margin-top:10px"></div>`)}
-function gSimC(id){const g=S.goals.find(x=>x.id==id),rem=g.target-g.current,v=mv('gsv');if(v<=0)return toast('Digite um valor');$('#gsr').textContent=rem<=0?'Meta já concluída':`Guardando ${R(v)}/mês, você atinge a meta em ~${Math.ceil(rem/v)} meses`}
+const fmtDur=mo=>{if(mo<=0)return'Concluído';if(mo<1)return'Menos de 1 mês';if(mo<12)return mo+' '+(mo==1?'mês':'meses');const y=Math.floor(mo/12),m=mo%12;return y+(y==1?' ano':' anos')+(m?' e '+m+(m==1?' mês':' meses'):'')};
+function simRange(rem,cur){const max=Math.max(200,Math.ceil((rem||200)/2)),min=Math.min(20,max-1);return{min,max,v:Math.min(Math.max(Math.round(cur||rem/12||min),min),max)}}
+function gSim(id){const g=S.goals.find(x=>x.id==id),rem=Math.max(0,g.target-g.current),{min,max,v}=simRange(rem,g.monthly),pct=Math.round((v-min)/(max-min)*100);
+sheet('Simular: '+esc(g.title),`<div class="mu">Faltam ${R(rem)} para concluir</div><div class="simBig" id="gsBig">${R(v)}<small>/mês</small></div>
+<input id="gsRng" type="range" class="rng" min="${min}" max="${max}" step="${Math.max(1,Math.round((max-min)/150))}" value="${v}" style="background:linear-gradient(to right,var(--ac) ${pct}%,#232e28 ${pct}%)" oninput="gSimDrag(${rem},${min},${max})">
+<div class="row mu" style="font-size:11px;margin-top:2px"><span>${R(min)}</span><span>${R(max)}</span></div>
+<label class="lb">Ou digite o valor mensal</label><div class="mf"><span>R$</span><input id="gsInp" class="in" inputmode="numeric" placeholder="0,00" value="${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}" oninput="mk(this);gSimType(${rem},${min},${max})"></div>
+<div class="simDur" id="gsDur">${rem<=0?'Meta já concluída 🎉':'~'+fmtDur(Math.ceil(rem/v))+' para concluir'}</div>
+<button class="btn" style="margin-top:16px" onclick="gSimApply(${id})">Usar como valor mensal da meta</button>`)}
+function gSimDrag(rem,min,max){const el=$('#gsRng'),v=+el.value,pct=Math.round((v-min)/(max-min)*100);
+el.style.background=`linear-gradient(to right,var(--ac) ${pct}%,#232e28 ${pct}%)`;$('#gsBig').innerHTML=R(v)+'<small>/mês</small>';
+$('#gsInp').value=v.toLocaleString('pt-BR',{minimumFractionDigits:2});
+$('#gsDur').textContent=rem<=0?'Meta já concluída 🎉':'~'+fmtDur(Math.ceil(rem/v))+' para concluir'}
+function gSimType(rem,min,max){const v=mv('gsInp');if(v<=0)return;const cv=Math.min(Math.max(v,min),max),pct=Math.round((cv-min)/(max-min)*100);
+$('#gsRng').value=cv;$('#gsRng').style.background=`linear-gradient(to right,var(--ac) ${pct}%,#232e28 ${pct}%)`;
+$('#gsBig').innerHTML=R(v)+'<small>/mês</small>';
+$('#gsDur').textContent=rem<=0?'Meta já concluída 🎉':'~'+fmtDur(Math.ceil(rem/v))+' para concluir'}
+function gSimApply(id){const v=mv('gsInp'),g=S.goals.find(x=>x.id==id);if(v<=0)return toast('Digite um valor válido');g.monthly=v;cl();save();toast('Valor mensal atualizado ✓')}
 function gA(id){sheet('Meta',`<button class="btn" onclick="gP(${id})">Adicionar valor</button><button class="btn o" onclick="gF(${id})">Editar</button><button class="btn d" onclick="gD(${id})">Excluir</button>`)}
 function gD(id){if(!confirm('Excluir esta meta?'))return;S.goals=S.goals.filter(x=>x.id!=id);cl();save();toast('Meta excluída')}
 function gP(id){const g=S.goals.find(x=>x.id==id);sheet('Adicionar valor',`<div class="mu">${esc(g.title)} · ${R(g.current)} de ${R(g.target)}</div><label class="lb">Quanto você quer adicionar?</label>${mf('gp')}<div class="chips" style="margin:12px 0 0">${[100,500,1000,5000].map(v=>`<button class="chip" onclick="$('#gp').value='${v},00';mk($('#gp'))">+${v.toLocaleString('pt-BR')}</button>`).join('')}</div><button class="btn" onclick="gPS(${id})">Adicionar</button>`)}
@@ -258,7 +292,7 @@ return headB('money','Dívidas','Organize e quite suas dívidas.',plus('dF()'))+
 (l.length?l.map(d=>{const rem=Math.max(0,d.total-d.paid),p=d.total?Math.min(100,Math.round(d.paid/d.total*100)):0,months=d.monthly>0?Math.ceil(rem/d.monthly):0;
 return`<div class="card"><div class="gc hc" onclick="dP(${d.id})"><div class="ic" style="background:#3f1d1d;color:var(--rd)">💳</div><div style="flex:1"><b>${esc(d.title)}</b><div class="mu" style="font-size:14px;color:var(--tx)">${R(d.total)}</div></div><button class="dots" onclick="event.stopPropagation();dA(${d.id})">${ic('dots')}</button></div>
 <div class="bar"><i style="width:${p}%"></i></div><div class="row mu" style="margin-top:8px"><span>Pago: ${R(d.paid)} (${p}%)</span><span>${d.due?fd(d.due):''}</span></div>
-<div class="mu">${rem<=0?'Quitada 🎉':(d.monthly>0?`Restante: ${R(rem)} · ~${months} ${months==1?'mês':'meses'} pra quitar`:`Restante: ${R(rem)}`)}</div></div>`}).join(''):'<div class="empty">Nenhuma dívida cadastrada.<br>Toque no + para adicionar.</div>')}
+<div class="mu">${rem<=0?'Quitada 🎉':(d.monthly>0?`Restante: ${R(rem)} · ~${months} ${months==1?'mês':'meses'} pra quitar`:`Restante: ${R(rem)}`)}</div>${rem>0?`<button class="chip" style="margin-top:8px;flex:none;padding:7px 12px" onclick="event.stopPropagation();dSim(${d.id})">Simular cenários</button>`:''}</div>`}).join(''):'<div class="empty">Nenhuma dívida cadastrada.<br>Toque no + para adicionar.</div>')}
 function dF(id){const d=(S.debts||[]).find(x=>x.id==id)||{};sheet(id?'Editar dívida':'Nova Dívida',`<label class="lb">Nome da dívida</label><input id="dt" class="in" placeholder="Ex: Cartão de crédito" value="${esc(d.title||'')}"><label class="lb">Valor total</label>${mf('dv',d.total)}<label class="lb">Já pago</label>${mf('dp',d.paid)}<label class="lb">Pagamento mensal planejado</label>${mf('dm',d.monthly)}<label class="lb">Vencimento (opcional)</label><input id="dd" type="date" class="in" value="${d.due||''}"><button class="btn" onclick="dS(${id||0})">${id?'Salvar':'Criar dívida'}</button>`)}
 function dS(id){const title=$('#dt').value.trim(),total=mv('dv');if(!title||total<=0)return toast('Preencha o nome e um valor válido');const o={title,total,paid:Math.min(mv('dp'),total),monthly:mv('dm'),due:$('#dd').value};
 S.debts=S.debts||[];if(id)Object.assign(S.debts.find(x=>x.id==id),o);else S.debts.push({id:Date.now(),...o});cl();save();toast('Dívida salva ✓')}
@@ -266,6 +300,22 @@ function dA(id){sheet('Dívida',`<button class="btn" onclick="dP(${id})">Registr
 function dD(id){if(!confirm('Excluir esta dívida?'))return;S.debts=S.debts.filter(x=>x.id!=id);cl();save();toast('Dívida excluída')}
 function dP(id){const d=S.debts.find(x=>x.id==id);sheet('Registrar pagamento',`<div class="mu">${esc(d.title)} · ${R(d.paid)} de ${R(d.total)}</div><label class="lb">Quanto você pagou?</label>${mf('dpp')}<button class="btn" onclick="dPS(${id})">Registrar</button>`)}
 function dPS(id){const v=mv('dpp');if(v<=0)return toast('Digite um valor maior que zero');const d=S.debts.find(x=>x.id==id),was=d.paid>=d.total;d.paid=Math.min(d.total,d.paid+v);if(!was&&d.paid>=d.total)addXP('debt');cl();save();toast(d.paid>=d.total?'Dívida quitada 🎉':'Pagamento registrado ✓')}
+function dSim(id){const d=S.debts.find(x=>x.id==id),rem=Math.max(0,d.total-d.paid),{min,max,v}=simRange(rem,d.monthly),pct=Math.round((v-min)/(max-min)*100);
+sheet('Simular: '+esc(d.title),`<div class="mu">Restam ${R(rem)} para quitar</div><div class="simBig" id="dsBig">${R(v)}<small>/mês</small></div>
+<input id="dsRng" type="range" class="rng" min="${min}" max="${max}" step="${Math.max(1,Math.round((max-min)/150))}" value="${v}" style="background:linear-gradient(to right,var(--ac) ${pct}%,#232e28 ${pct}%)" oninput="dSimDrag(${rem},${min},${max})">
+<div class="row mu" style="font-size:11px;margin-top:2px"><span>${R(min)}</span><span>${R(max)}</span></div>
+<label class="lb">Ou digite o valor mensal</label><div class="mf"><span>R$</span><input id="dsInp" class="in" inputmode="numeric" placeholder="0,00" value="${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}" oninput="mk(this);dSimType(${rem},${min},${max})"></div>
+<div class="simDur" id="dsDur">${rem<=0?'Dívida já quitada 🎉':'~'+fmtDur(Math.ceil(rem/v))+' para quitar'}</div>
+<button class="btn" style="margin-top:16px" onclick="dSimApply(${id})">Usar como pagamento mensal</button>`)}
+function dSimDrag(rem,min,max){const el=$('#dsRng'),v=+el.value,pct=Math.round((v-min)/(max-min)*100);
+el.style.background=`linear-gradient(to right,var(--ac) ${pct}%,#232e28 ${pct}%)`;$('#dsBig').innerHTML=R(v)+'<small>/mês</small>';
+$('#dsInp').value=v.toLocaleString('pt-BR',{minimumFractionDigits:2});
+$('#dsDur').textContent=rem<=0?'Dívida já quitada 🎉':'~'+fmtDur(Math.ceil(rem/v))+' para quitar'}
+function dSimType(rem,min,max){const v=mv('dsInp');if(v<=0)return;const cv=Math.min(Math.max(v,min),max),pct=Math.round((cv-min)/(max-min)*100);
+$('#dsRng').value=cv;$('#dsRng').style.background=`linear-gradient(to right,var(--ac) ${pct}%,#232e28 ${pct}%)`;
+$('#dsBig').innerHTML=R(v)+'<small>/mês</small>';
+$('#dsDur').textContent=rem<=0?'Dívida já quitada 🎉':'~'+fmtDur(Math.ceil(rem/v))+' para quitar'}
+function dSimApply(id){const v=mv('dsInp'),d=S.debts.find(x=>x.id==id);if(v<=0)return toast('Digite um valor válido');d.monthly=v;cl();save();toast('Pagamento mensal atualizado ✓')}
 
 /* ALERTAS FINANCEIROS */
 const ALERT_CATS=['Alimentação','Transporte','Casa','Lazer','Delivery','Entretenimento','Compras','Assinaturas','Outros'];
@@ -409,15 +459,29 @@ function aiUsage(){const d=new Date().toISOString().slice(0,10);let u;try{u=JSON
 function aiUsageLeft(){return Math.max(0,AILIM-aiUsage().count)}
 function aiUsageBump(){const u=aiUsage();u.count++;try{localStorage.setItem(AILK,JSON.stringify(u))}catch(e){}}
 const AIS=['Quero criar o hábito de estudar 30 minutos por dia, 3 vezes na semana','Monte uma rotina de manhã para eu ser mais produtivo','Como eu uso as Finanças e as assinaturas no app?','Estou procrastinando muito. Me ajuda?'];
-const aiFmt=t=>esc(t).replace(/^#{1,4} (.+)$/gm,'<b>$1</b>').replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/^[-*•] (.+)$/gm,'<span class="li">• $1</span>').replace(/<\/span>\n/g,'</span>').replace(/\n/g,'<br>');
+const aiInline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g,'$1<i>$2</i>');
+function aiFmt(raw){const lines=(raw||'').replace(/\r\n/g,'\n').split('\n');
+const isRow=l=>/^\s*\|.*\|\s*$/.test(l),isSep=l=>/^[\s|:-]+$/.test(l)&&l.includes('-')&&l.includes('|'),
+cells=l=>l.split('|').map(c=>c.trim()).filter((c,idx,a)=>!((idx==0||idx==a.length-1)&&c==''));
+let out='',i=0;
+while(i<lines.length){const line=lines[i];
+if(!line.trim()){i++;continue}
+if(isRow(line)&&isSep(lines[i+1]||'')){const head=cells(line);i+=2;const rows=[];while(i<lines.length&&isRow(lines[i])){rows.push(cells(lines[i]));i++}
+out+=`<div class="tbl"><table><thead><tr>${head.map(h=>`<th>${aiInline(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${aiInline(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;continue}
+let m;
+if(m=line.match(/^#{1,4}\s+(.+)$/)){out+=`<div class="mh">${aiInline(m[1])}</div>`;i++;continue}
+if(m=line.match(/^(\d+)[.)]\s+(.+)$/)){out+=`<div class="nli"><span class="nn">${m[1]}</span><span>${aiInline(m[2])}</span></div>`;i++;continue}
+if(m=line.match(/^[-*•]\s+(.+)$/)){out+=`<span class="li">• ${aiInline(m[1])}</span>`;i++;continue}
+out+=`<div class="pl">${aiInline(line)}</div>`;i++}
+return out}
 function aiParse(raw){const re=/\[\[\s*HABITO\s*\|([^\]]*)\]\]/i,m=raw.match(re),t=raw.replace(new RegExp(re.source,'gi'),'').trim();if(!m)return{t};
 const [ti,am,u0,fr,ct]=m[1].split('|').map(x=>x.trim());if(!ti)return{t};let u=(u0||'vezes').toLowerCase();
 u=/^min/.test(u)?'min':/^hora/.test(u)?'horas':/^p[áa]g/.test(u)?'páginas':/^copo/.test(u)?'copos':/^vez/.test(u)?'vezes':u.slice(0,14);
 const n=(fr||'').match(/(\d)\s*x/i),f=FR.find(x=>x.toLowerCase()==(fr||'').toLowerCase())||(n?({1:FR[4],2:FR[3],3:FR[2],4:FR[1],5:FR[1],6:FR[0],7:FR[0]})[n[1]]:null)||FR[0];
 return{t,h:{title:ti.slice(0,40),amount:+(am||'').replace(',','.')||1,unit:u,freq:f,cat:['Saúde','Estudo','Lazer','Outros'].find(c=>c.toLowerCase()==(ct||'').toLowerCase())||'Outros'}}}
 const aiHC=(m,i)=>`<div class="hc2"><div class="mu" style="font-size:11px;letter-spacing:.8px">HÁBITO NEXA</div><b>${esc(m.h.title)}</b><div class="mu">${nn(m.h.amount)} ${esc(m.h.unit)} · ${esc(m.h.freq)} · ${esc(m.h.cat)}</div>${m.h.added?'<div class="pos" style="margin-top:8px">✓ Adicionado aos seus hábitos</div>':`<button class="btn" style="margin:10px 0 0;padding:11px" onclick="aiAdd(${i})">Adicionar aos meus hábitos</button>`}</div>`;
-const aiMsg=(m,i)=>m.r=='user'?`<div class="mg u">${esc(m.t)}</div>`:`<div class="mg a">${aiFmt(m.t)}${m.h?aiHC(m,i):''}</div>`;
-const aiBody=()=>{const c=S.chat||[];return(c.length?c.map(aiMsg).join(''):`<div class="mg a">Oi, ${esc(U.name)}! Eu sou a Nexa AI 💚 Posso montar planos de hábitos, organizar sua rotina, dar dicas de produtividade e te ajudar a usar o app. Por onde começamos?</div><div class="qs">${AIS.map((q,i)=>`<button class="chip" style="flex:none;text-align:left;padding:9px 14px" onclick="aiQ(${i})">${q}</button>`).join('')}</div>`)+(AIB?'<div class="mg a"><span class="tp"><i></i><i></i><i></i></span></div>':'')};
+const aiMsg=(m,i)=>m.r=='user'?`<div class="mrow u"><div class="mg u">${esc(m.t)}</div></div>`:`<div class="mrow a"><div class="nxav">${ic('spark',14)}</div><div class="mg a">${aiFmt(m.t)}${m.h?aiHC(m,i):''}</div></div>`;
+const aiBody=()=>{const c=S.chat||[];return(c.length?c.map(aiMsg).join(''):`<div class="mrow a"><div class="nxav">${ic('spark',14)}</div><div class="mg a">Oi, ${esc(U.name)}! Eu sou a Nexa AI 💚 Posso montar planos de hábitos, organizar sua rotina, dar dicas de produtividade e te ajudar a usar o app. Por onde começamos?</div></div><div class="qs">${AIS.map((q,i)=>`<button class="chip" style="flex:none;text-align:left;padding:9px 14px" onclick="aiQ(${i})">${q}</button>`).join('')}</div>`)+(AIB?`<div class="mrow a"><div class="nxav">${ic('spark',14)}</div><div class="mg a"><span class="tp"><i></i><i></i><i></i></span></div></div>`:'')};
 const aiScroll=()=>scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),aiDraw=()=>{const el=$('#cm');if(el){el.innerHTML=aiBody();aiScroll()}};
 function nai(){const top=head('Nexa AI','Sua mentora de hábitos e produtividade.',`<button class="av" onclick="aiMenu()">${ic('dots',18)}</button>`),left=aiUsageLeft();
 setTimeout(aiScroll,0);
