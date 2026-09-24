@@ -491,11 +491,16 @@ function aiClear(){if(!confirm('Apagar toda a conversa com a Nexa AI?'))return;S
 function aiQ(i){$('#aiq').value=AIS[i];aiSend()}
 function aiAdd(i){const m=(S.chat||[])[i];if(!m||!m.h||m.h.added)return;if(S.habits.some(x=>String(x.title).toLowerCase()==m.h.title.toLowerCase()))return toast('Você já tem um hábito com esse nome');
 S.habits.push({id:Date.now(),title:m.h.title,amount:m.h.amount,unit:m.h.unit,freq:m.h.freq,cat:m.h.cat,progress:0,pd:''});m.h.added=true;save();toast('Hábito criado ✓ Veja em Hábitos')}
+function aiHealthCtx(){const b=(S.body||[]).slice(-1)[0],wk=(S.workouts||[]).slice(-5).map(w=>`${w.type} ${w.duration}min`),p=[];
+if(b)p.push(`peso atual ${b.weight}kg`+(b.measures?`, medidas: ${b.measures}`:''));
+if(S.profile&&S.profile.weightGoal)p.push(`meta de peso ${S.profile.weightGoal}kg`);
+if(wk.length)p.push(`treinos recentes: ${wk.join('; ')}`);
+return p.join(' | ')||'sem dados registrados'}
 async function aiSend(){const inp=$('#aiq');if(!inp)return;const t=inp.value.trim();if(!t||AIB)return;
 if(aiUsageLeft()<=0){toast('Limite diário de mensagens atingido. Volte amanhã 💚');return}
 S.chat=S.chat||[];S.chat.push({r:'user',t});inp.value='';AIB=true;aiDraw();
 try{const hist=S.chat.filter(m=>!m.err).slice(-14).map(m=>({role:m.r,content:m.t})),
-r=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist,userName:U.name,habits:S.habits.map(h=>`${h.title} (${nn(h.amount)} ${un(h)}, ${h.freq||'Todos os dias'})`),goals:S.goals.map(g=>g.title||g.name).filter(Boolean)})}),j=await r.json().catch(()=>({}));
+r=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist,userName:U.name,habits:S.habits.map(h=>`${h.title} (${nn(h.amount)} ${un(h)}, ${h.freq||'Todos os dias'})`),goals:S.goals.map(g=>g.title||g.name).filter(Boolean),health:aiHealthCtx()})}),j=await r.json().catch(()=>({}));
 if(!r.ok)throw new Error(r.status==429?'Muitas mensagens em pouco tempo. Aguarde alguns segundos e tente de novo.':(j&&j.error)||'Erro '+r.status);
 aiUsageBump();const a=aiParse(j.content||'');S.chat.push({r:'assistant',t:a.t||'Não consegui responder agora. Tente de novo.',h:a.h})}
 catch(e){S.chat.push({r:'assistant',err:1,t:'⚠ '+(e instanceof TypeError?'Sem conexão com a Nexa AI. Verifique a internet e tente de novo.':e.message)})}
