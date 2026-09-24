@@ -118,7 +118,8 @@ let U=null,S=null,V='home',F={g:'all',h:'all',acc:'personal',per:'week'},eye=tru
 const hide=v=>eye?R(v):'R$ ••••••';
 const toast=t=>{$('#ts').innerHTML=`<div class="toast">${t}</div>`;clearTimeout(T);T=setTimeout(()=>$('#ts').innerHTML='',2000)};
 const sk=()=>'nexa_u_'+U.email,save=()=>{db.set(sk(),JSON.stringify(S));render()};
-const hash=async p=>{try{return[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p)))].map(b=>b.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(p)))}};
+const CRYPTO_OK=!!(window.crypto&&crypto.subtle&&crypto.subtle.digest);
+const hash=async p=>{if(!CRYPTO_OK)throw new Error('no-subtle-crypto');return[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(p)))].map(b=>b.toString(16).padStart(2,'0')).join('')};
 const mk=el=>{const d=el.value.replace(/\D/g,'');el.value=d?(d/100).toLocaleString('pt-BR',{minimumFractionDigits:2}):''},mv=id=>(+($('#'+id).value.replace(/\D/g,''))||0)/100;
 const mf=(id,v)=>`<div class="mf"><span>R$</span><input id="${id}" class="in" inputmode="numeric" placeholder="0,00" oninput="mk(this)" value="${v?(+v).toLocaleString('pt-BR',{minimumFractionDigits:2}):''}"></div>`;
 const cl=()=>$('#md').innerHTML='',sheet=(t,b)=>$('#md').innerHTML=`<div class="ov" onclick="event.target==this&&cl()"><div class="sh"><div class="sht"><b>${t}</b><button onclick="cl()">${ic('x')}</button></div>${b}</div></div>`;
@@ -126,6 +127,7 @@ const go=v=>{V=v;render();scrollTo(0,0)};
 
 /* ---------- AUTH ---------- */
 function authView(){$('#app').innerHTML=`<div class="au"><div class="lg">N</div><h1>NEXA</h1><small>PLANEJE · CONQUISTE · EVOLUA</small>${OKS?'':'<div class="wn">⚠ Seu navegador está bloqueando o armazenamento. Sua conta só vale enquanto esta aba estiver aberta. Abra o arquivo direto no Chrome ou Safari, fora de pré-visualizações.</div>'}
+${CRYPTO_OK?'':'<div class="wn">⚠ Este navegador/contexto não suporta criptografia segura (crypto.subtle). Login e cadastro estão desativados aqui — abra o app via HTTPS no Chrome ou Safari.</div>'}
 <h2>${mode=='in'?'Bem-vindo de volta!':'Crie sua conta'}</h2><p class="sub">Sua vida organizada em um só lugar.</p>
 ${mode=='up'?`<label class="fi">${ic('note')}<input id="nm" placeholder="Seu nome"></label>`:''}
 <label class="fi">${ic('mail')}<input id="em" placeholder="E-mail ou usuário" autocomplete="username" onkeydown="event.key=='Enter'&&doAuth()"></label>
@@ -134,9 +136,11 @@ ${mode=='up'?`<label class="fi">${ic('note')}<input id="nm" placeholder="Seu nom
 <button class="btn" onclick="doAuth()">${mode=='in'?'Entrar':'Criar conta'}</button><div class="mu">ou</div>
 <button class="btn o" style="margin:0" onclick="mode=mode=='in'?'up':'in';authView()">${mode=='in'?'Criar nova conta':'Já tenho conta'}</button><a href="#" style="font-size:12.5px" onclick="bkImport();return false">Restaurar backup</a></div>`}
 async function doAuth(){const e=$('#em').value.trim().toLowerCase(),p=$('#pw').value;if(!e||p.length<6)return toast('Informe usuário e senha (mín. 6 caracteres)');
-const h=await hash(p),A=getAcc();
+if(!CRYPTO_OK)return toast('Este navegador/contexto não oferece criptografia segura (crypto.subtle). Abra o app em uma aba normal, via HTTPS, no Chrome ou Safari.');
+let h;try{h=await hash(p)}catch(x){return toast('Não foi possível processar sua senha com segurança neste navegador.')}
+const A=getAcc();
 if(mode=='up'){const n=$('#nm').value.trim();if(!n)return toast('Digite seu nome');if(A[e])return toast('Essa conta já existe');
-if(!Object.keys(A).length&&db.get(K)&&!db.get('nexa_u_'+e))db.set('nexa_u_'+e,db.get(K));
+if(db.get(K)&&!db.get('nexa_u_'+e)&&!db.get(K+'_claimed'))db.set('nexa_u_'+e,db.get(K)),db.set(K+'_claimed','1');
 A[e]={n,h};db.set(AK,JSON.stringify(A))}else if(!A[e]||A[e].h!=h)return toast('Usuário ou senha incorretos');
 ($('#rm').checked?db:sdb).set(SK,e);try{navigator.storage.persist()}catch(x){}start(e);if(!OKS)setTimeout(()=>toast('⚠ Este navegador não está guardando seus dados. Abra o arquivo direto no Chrome ou Safari.'),400)}
 function start(e){const A=getAcc();if(!A[e]){if(e){db.del(SK);sdb.del(SK);authView();toast('Conta não encontrada neste aparelho. Restaure um backup ou crie a conta de novo.')}else authView();return}U={email:e,name:A[e].n};
@@ -454,10 +458,16 @@ function bX(id){S.body=S.body.filter(x=>x.id!=id);save()}
 
 /* ---------- NEXA AI (via Netlify Function, chave protegida no servidor) ---------- */
 const FR=['Todos os dias','Segunda a sexta','3x por semana','2x por semana','1x por semana'];let AIB=false;
-const AILIM=8,AILK='nexa_ai_daily';
-function aiUsage(){const d=new Date().toISOString().slice(0,10);let u;try{u=JSON.parse(localStorage.getItem(AILK)||'{}')}catch(e){u={}}if(u.date!==d)u={date:d,count:0};return u}
+const AILIM=8;
+// Chave por conta (e-mail) — cada usuário tem seu próprio contador local.
+// Isso é só uma otimização de UX (evita chamar o servidor à toa quando o
+// limite já estourou); o limite de verdade é aplicado no servidor (chat.js),
+// que não confia neste valor.
+const aiKey=()=>'nexa_ai_daily_'+(U&&U.email||'anon');
+function aiUsage(){const d=new Date().toISOString().slice(0,10);let u;try{u=JSON.parse(localStorage.getItem(aiKey())||'{}')}catch(e){u={}}if(u.date!==d)u={date:d,count:0};return u}
 function aiUsageLeft(){return Math.max(0,AILIM-aiUsage().count)}
-function aiUsageBump(){const u=aiUsage();u.count++;try{localStorage.setItem(AILK,JSON.stringify(u))}catch(e){}}
+function aiUsageBump(){const u=aiUsage();u.count++;try{localStorage.setItem(aiKey(),JSON.stringify(u))}catch(e){}}
+function aiUsageMax(){const u=aiUsage();u.count=AILIM;try{localStorage.setItem(aiKey(),JSON.stringify(u))}catch(e){}}
 const AIS=['Quero criar o hábito de estudar 30 minutos por dia, 3 vezes na semana','Monte uma rotina de manhã para eu ser mais produtivo','Como eu uso as Finanças e as assinaturas no app?','Estou procrastinando muito. Me ajuda?'];
 const aiInline=s=>esc(s).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g,'$1<i>$2</i>');
 function aiFmt(raw){const lines=(raw||'').replace(/\r\n/g,'\n').split('\n');
@@ -486,12 +496,14 @@ const aiScroll=()=>scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),
 function nai(){const top=head('Nexa AI','Sua mentora de hábitos e produtividade.',`<button class="av" onclick="aiMenu()">${ic('dots',18)}</button>`),left=aiUsageLeft();
 setTimeout(aiScroll,0);
 return top+`<div id="cm">${aiBody()}</div>`+(left<=0?`<div class="card" style="margin:0 0 12px"><b>Limite diário atingido</b><div class="mu" style="font-size:13px;margin-top:4px">Você usou suas ${AILIM} mensagens grátis de hoje. Volte amanhã para continuar conversando com a Nexa AI 💚</div></div>`:`<div class="cb2"><input id="aiq" class="in" placeholder="Fale com a Nexa AI..." enterkeyhint="send" onkeydown="event.key=='Enter'&&aiSend()"><button onclick="aiSend()" aria-label="Enviar">↑</button></div><div class="mu" style="text-align:center;font-size:11px;margin-top:6px">${left} mensagem${left==1?'':'s'} grátis restante${left==1?'':'s'} hoje</div>`)+`<div style="height:72px"></div>`}
-function aiMenu(){sheet('Nexa AI',`<button class="btn o" onclick="aiClear()">Limpar conversa</button>`)}
+function aiMenu(){const on=!!(S.profile&&S.profile.shareHealth);sheet('Nexa AI',`<div class="tr" style="border:0"><div style="flex:1"><b style="font-size:14px">Compartilhar dados de saúde com a IA</b><div class="mu" style="font-size:12px;margin-top:2px">Peso, medidas e treinos recentes ajudam a Nexa a personalizar respostas.</div></div><button class="sw ${on?'on':''}" onclick="aiToggleHealth()"></button></div><button class="btn o" style="margin-top:14px" onclick="aiClear()">Limpar conversa</button>`)}
+function aiToggleHealth(){S.profile=S.profile||{};S.profile.shareHealth=!S.profile.shareHealth;cl();save();aiMenu()}
 function aiClear(){if(!confirm('Apagar toda a conversa com a Nexa AI?'))return;S.chat=[];cl();save()}
 function aiQ(i){$('#aiq').value=AIS[i];aiSend()}
 function aiAdd(i){const m=(S.chat||[])[i];if(!m||!m.h||m.h.added)return;if(S.habits.some(x=>String(x.title).toLowerCase()==m.h.title.toLowerCase()))return toast('Você já tem um hábito com esse nome');
 S.habits.push({id:Date.now(),title:m.h.title,amount:m.h.amount,unit:m.h.unit,freq:m.h.freq,cat:m.h.cat,progress:0,pd:''});m.h.added=true;save();toast('Hábito criado ✓ Veja em Hábitos')}
-function aiHealthCtx(){const b=(S.body||[]).slice(-1)[0],wk=(S.workouts||[]).slice(-5).map(w=>`${w.type} ${w.duration}min`),p=[];
+function aiHealthCtx(){if(!(S.profile&&S.profile.shareHealth))return'sem dados registrados (usuário não autorizou compartilhar dados de saúde com a IA)';
+const b=(S.body||[]).slice(-1)[0],wk=(S.workouts||[]).slice(-5).map(w=>`${w.type} ${w.duration}min`),p=[];
 if(b)p.push(`peso atual ${b.weight}kg`+(b.measures?`, medidas: ${b.measures}`:''));
 if(S.profile&&S.profile.weightGoal)p.push(`meta de peso ${S.profile.weightGoal}kg`);
 if(wk.length)p.push(`treinos recentes: ${wk.join('; ')}`);
@@ -500,8 +512,9 @@ async function aiSend(){const inp=$('#aiq');if(!inp)return;const t=inp.value.tri
 if(aiUsageLeft()<=0){toast('Limite diário de mensagens atingido. Volte amanhã 💚');return}
 S.chat=S.chat||[];S.chat.push({r:'user',t});inp.value='';AIB=true;aiDraw();
 try{const hist=S.chat.filter(m=>!m.err).slice(-14).map(m=>({role:m.r,content:m.t})),
-r=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist,userName:U.name,habits:S.habits.map(h=>`${h.title} (${nn(h.amount)} ${un(h)}, ${h.freq||'Todos os dias'})`),goals:S.goals.map(g=>g.title||g.name).filter(Boolean),health:aiHealthCtx()})}),j=await r.json().catch(()=>({}));
-if(!r.ok)throw new Error(r.status==429?'Muitas mensagens em pouco tempo. Aguarde alguns segundos e tente de novo.':(j&&j.error)||'Erro '+r.status);
+r=await fetch('/.netlify/functions/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:hist,userName:U.name,email:U.email,habits:S.habits.map(h=>`${h.title} (${nn(h.amount)} ${un(h)}, ${h.freq||'Todos os dias'})`),goals:S.goals.map(g=>g.title||g.name).filter(Boolean),health:aiHealthCtx()})}),j=await r.json().catch(()=>({}));
+if(!r.ok){if(r.status==429){aiUsageMax();throw new Error((j&&j.error)||'Limite de mensagens atingido. Tente novamente mais tarde.')}
+throw new Error((j&&j.error)||'Erro '+r.status)}
 aiUsageBump();const a=aiParse(j.content||'');S.chat.push({r:'assistant',t:a.t||'Não consegui responder agora. Tente de novo.',h:a.h})}
 catch(e){S.chat.push({r:'assistant',err:1,t:'⚠ '+(e instanceof TypeError?'Sem conexão com a Nexa AI. Verifique a internet e tente de novo.':e.message)})}
 AIB=false;S.chat=S.chat.slice(-40);if(U)db.set(sk(),JSON.stringify(S));render()}

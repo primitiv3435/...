@@ -4,3 +4,20 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Cabeçalhos de segurança básicos para todas as páginas do app.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), camera=(), microphone=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'"
+
+# Garante que ninguém acesse o código-fonte das functions como arquivo estático,
+# mesmo que ele esteja dentro do diretório publicado.
+[[redirects]]
+  from = "/netlify/functions/*"
+  to = "/"
+  status = 404
